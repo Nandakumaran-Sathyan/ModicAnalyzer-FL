@@ -5,7 +5,7 @@ Simulates multiple users                # Trigger aggregation if we have enough 
             if successful_uploads >= 2:
                 try:
                     print("🔄 Triggering federated aggregation...")
-                    response = requests.post("http://localhost:8000/aggregate")  # Change to your Render URLing and leaving the federated learning process.
+                    response = requests.post("https://modic-fl-server.onrender.com/aggregate")  # Your live Render servering and leaving the federated learning process.
 """
 
 import asyncio
@@ -18,7 +18,7 @@ import tempfile
 from test_client import create_dummy_weights, save_weights_to_npz, upload_weights, simulate_local_training
 
 class FLUser:
-    def __init__(self, user_id, server_url="http://localhost:8000"):  # Change to your Render URL
+    def __init__(self, user_id, server_url="https://modic-fl-server.onrender.com"):  # Your live Render server
         self.user_id = user_id
         self.server_url = server_url
         self.model_weights = create_dummy_weights()
@@ -126,7 +126,7 @@ async def simulate_real_time_fl():
         
         # Show server status
         try:
-            response = requests.get("http://localhost:8000/status")  # Change to your Render URL
+            response = requests.get("https://modic-fl-server.onrender.com/status")  # Your live Render server
             if response.status_code == 200:
                 status = response.json()
                 print(f"🏥 Server status: {status['unique_clients']} unique clients, "

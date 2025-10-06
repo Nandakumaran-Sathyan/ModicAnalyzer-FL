@@ -777,8 +777,32 @@ fun ModernResultDialog(
                     )
                 }
             }
-        }
-    }
+        },
+        text = {
+            Text(
+                result,
+                fontSize = 14.sp,
+                color = Color(0xFF1E293B)
+            )
+        },
+        confirmButton = {
+            Button(
+                onClick = onDismiss,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = resultColor
+                ),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Text(
+                    "Continue",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        },
+        containerColor = Color.White,
+        shape = RoundedCornerShape(20.dp)
+    )
 }
 
 @Composable
@@ -891,74 +915,5 @@ fun FederatedLearningCard(
                 }
             }
         }
-            }
-        },
-        text = {
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = backgroundColor
-                ),
-                border = BorderStroke(1.dp, borderColor.copy(alpha = 0.3f)),
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier.alpha(alpha)
-            ) {
-                Column(
-                    modifier = Modifier.padding(20.dp)
-                ) {
-                    Text(
-                        text = "Analysis Results:",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Color(0xFF374151)
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = result,
-                        fontSize = 14.sp,
-                        lineHeight = 20.sp,
-                        color = Color(0xFF1F2937)
-                    )
-                    
-                    if (isModicDetected) {
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                Icons.Default.Info,
-                                contentDescription = null,
-                                tint = Color(0xFFDC2626),
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                "Recommend clinical correlation",
-                                fontSize = 12.sp,
-                                color = Color(0xFFDC2626),
-                                fontWeight = FontWeight.Medium
-                            )
-                        }
-                    }
-                }
-            }
-        },
-        confirmButton = {
-            Button(
-                onClick = onDismiss,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = resultColor
-                ),
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier.scale(scale)
-            ) {
-                Text(
-                    "Continue",
-                    color = Color.White,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-        },
-        containerColor = Color.White,
-        shape = RoundedCornerShape(20.dp)
-    )
+    }
 }

@@ -7,6 +7,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.*
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -20,7 +21,7 @@ import java.util.zip.ZipOutputStream
  */
 class FederatedLearningClient(
     private val context: Context,
-    private val serverUrl: String = "http://10.0.2.2:8000", // Default for Android emulator
+    private val serverUrl: String = "https://modic-fl-server.onrender.com", // Your live Render server
     private val clientId: String = android.provider.Settings.Secure.getString(
         context.contentResolver,
         android.provider.Settings.Secure.ANDROID_ID
@@ -256,7 +257,7 @@ class FederatedLearningClient(
             Log.d(TAG, "Triggering aggregation...")
             val request = Request.Builder()
                 .url("$serverUrl/aggregate")
-                .post(RequestBody.create(null, ""))
+                .post("".toRequestBody())
                 .build()
 
             val response = httpClient.newCall(request).execute()

@@ -13,7 +13,7 @@ from datetime import datetime
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def get_server_stats(server_url="http://localhost:8000"):  # Change to your Render URL
+def get_server_stats(server_url="https://modic-fl-server.onrender.com"):  # Your live Render server
     try:
         response = requests.get(f"{server_url}/status")
         if response.status_code == 200:

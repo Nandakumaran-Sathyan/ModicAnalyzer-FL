@@ -12,7 +12,7 @@ from pathlib import Path
 import tempfile
 
 # Backend server URL
-SERVER_URL = "http://localhost:8000"  # Change to your Render URL: https://your-app.onrender.com
+SERVER_URL = "https://modic-fl-server.onrender.com"  # Your live Render server
 
 def create_dummy_weights(layer_shapes=None):
     """Create dummy model weights to simulate a trained model."""

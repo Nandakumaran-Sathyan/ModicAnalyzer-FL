@@ -25,11 +25,11 @@ import java.util.concurrent.Executors
  */
 class ModicClassifier(private val context: Context) {
     // TF Lite interpreter as per official pattern
-    private var interpreter: Interpreter? = null
+    private var _interpreter: Interpreter? = null
     
     // Public getter for federated learning
     val interpreter: Interpreter
-        get() = this.interpreter ?: throw IllegalStateException("Classifier not initialized")
+        get() = this._interpreter ?: throw IllegalStateException("Classifier not initialized")
     
     var isInitialized = false
         private set
@@ -87,7 +87,7 @@ class ModicClassifier(private val context: Context) {
             }
 
             // Finish interpreter initialization
-            this.interpreter = interpreter
+            this._interpreter = interpreter
 
             isInitialized = true
             Log.d(TAG, "✅ TFLite 2.17.0 interpreter initialized successfully for medical imaging.")
@@ -104,7 +104,7 @@ class ModicClassifier(private val context: Context) {
             
             // Mark as initialized but with fallback mode
             isInitialized = true
-            interpreter = null // Keep null to trigger fallback
+            _interpreter = null // Keep null to trigger fallback
             
         } catch (e: Exception) {
             Log.e(TAG, "❌ Unexpected error initializing TensorFlow Lite", e)
@@ -126,7 +126,7 @@ class ModicClassifier(private val context: Context) {
         check(isInitialized) { "TF Lite Classifier is not initialized yet." }
 
         // Check if we're in fallback mode (model incompatible)
-        if (interpreter == null) {
+        if (_interpreter == null) {
             Log.d(TAG, "Using fallback mode - model version incompatible")
             return createCompatibilityFallbackResult()
         }
@@ -156,7 +156,7 @@ class ModicClassifier(private val context: Context) {
         val inputs = arrayOf(t1Buffer, t2Buffer)
         val outputs = mapOf(0 to output)
         
-        interpreter?.runForMultipleInputsOutputs(inputs, outputs)
+        _interpreter?.runForMultipleInputsOutputs(inputs, outputs)
 
         // Post-processing: interpret medical results
         val result = output[0]
@@ -201,7 +201,7 @@ class ModicClassifier(private val context: Context) {
 
     fun close() {
         executorService.execute {
-            interpreter?.close()
+            _interpreter?.close()
             Log.d(TAG, "Closed TFLite interpreter.")
         }
     }
